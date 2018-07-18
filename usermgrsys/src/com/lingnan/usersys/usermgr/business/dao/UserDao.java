@@ -15,5 +15,7 @@ public interface UserDao extends BaseDao{
 	public boolean register(UserVo newuser);
 	
 	public UserVo findById(int id);
+	
+	public boolean delete(int id);
 
 }

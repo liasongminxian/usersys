@@ -23,15 +23,25 @@ public class UserDaoImplTest {
 //		
 //	}
 	
-	public void testFindById() {
-		Connection conn=null;
-		UserVo user=null;
-		conn=DBUtils.getConnection();
-		UserDaoImpl userconn=new UserDaoImpl(conn);
-		user=userconn.findById(5);
-		System.out.println(user.getName());
-		
-	}
+	public void testDelete() {
+	Connection conn=null;
+	boolean flag=false;
+	conn=DBUtils.getConnection();
+	UserDaoImpl userconn=new UserDaoImpl(conn);
+	flag=userconn.delete(8);
+	System.out.println(flag);
+	
+}
+	
+//	public void testFindById() {
+//		Connection conn=null;
+//		UserVo user=null;
+//		conn=DBUtils.getConnection();
+//		UserDaoImpl userconn=new UserDaoImpl(conn);
+//		user=userconn.findById(5);
+//		System.out.println(user.getName());
+//		
+//	}
 	
 //	public void testRegister() {
 //		Connection conn=null;

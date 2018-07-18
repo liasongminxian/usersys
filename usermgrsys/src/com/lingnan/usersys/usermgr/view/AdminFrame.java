@@ -3,6 +3,7 @@ package com.lingnan.usersys.usermgr.view;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import com.lingnan.usersys.common.util.TypeUtils;
 import com.lingnan.usersys.usermgr.controller.UserController;
 import com.lingnan.usersys.usermgr.domain.UserVo;
 
@@ -37,7 +38,7 @@ public class AdminFrame extends NormalFrame{
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		
 		while(true){
-			
+			System.out.println();
 			System.out.println("添加管理员---------------- 1");
 			System.out.println("删除用户------------------ 2");
 			System.out.println("查询用户------------------ 3");
@@ -63,16 +64,16 @@ public class AdminFrame extends NormalFrame{
 				this.addShow("注册管理员");
 				break;
 			case 2:
-				this.updateShow("删除用户",user);//考虑user
+				this.updateShow("删除用户");//考虑user
 				break;
 			case 3:
 				this.searchShow();
 				break;
 			case 4:
-				this.updateShow("修改用户",user);
+				this.updateShow("修改用户");
 				break;
 			case 5:
-				this.updateShow("修改个人信息",user);
+				this.updateShow("修改个人信息");
 				break;
 		
 			case 6:
@@ -130,7 +131,9 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 					id=Integer.parseInt(br.readLine());
 					UserController uc=new UserController();
 					UserVo getuser=uc.doFindById(id);
+					if(getuser!=null){
 					detailShow(getuser);
+					}
 					break;
 				} catch(Exception e){
 					System.out.println("输入错误，只能输入1~6的数字");
@@ -142,7 +145,7 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 				this.searchShow();
 				break;
 			case 4:
-				this.updateShow("修改用户",user);
+				this.updateShow("修改用户");
 				break;
 			case 5:
 				this.show();
@@ -186,6 +189,85 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		
 		
 		
+	}
+	
+	public void addShow(String type){
+		
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		if(("注册管理员").equals(type)){
+			System.out.println();
+		System.out.println("增加管理员界面");
+		System.out.println("====================");
+		System.out.println("请输入新管理员的用户名：");
+		try{
+			UserVo newuser=new UserVo();
+			newuser.setName(br.readLine());
+			System.out.println("请输入新管理员的密码：");
+			newuser.setPass(br.readLine());
+			while(true){
+				System.out.println("请输入新管理员的邮箱：");
+				String mail=br.readLine();
+				if(TypeUtils.mailCheck(mail)){
+					newuser.setMail(mail);
+					break;				
+				} else{
+					System.out.println("请输入正确的邮箱格式：前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
+				}
+				
+				
+			}
+			
+			System.out.println("请输入新管理员的生日(yyyy-mm-dd)：");
+			String birth=br.readLine();
+			java.sql.Date date=TypeUtils.strToDate(birth);
+			newuser.setBirth(date);
+			newuser.setSuperuser(1);
+			UserController uc=new UserController();
+			boolean flag=uc.doRegister(newuser);
+			if(flag){
+				System.out.println("添加成功！！！");			
+			}else{
+				System.out.println("添加失败啦o(╥﹏╥)o");
+			}
+		} catch(Exception e){
+			System.out.println("增加新管理员时出错了"+e.getMessage());
+		} 
+	
+		}
+		
+	}
+	
+	
+	public void updateShow(String type){
+		
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		if(("删除用户").equals(type)){
+			System.out.println();
+		System.out.println("删除用户界面");
+		System.out.println("====================");
+		System.out.println("请输入要删除的用户ID：");
+		int id=-1;
+		while(true){
+			try{
+				id=Integer.parseInt(br.readLine());
+				UserController uc=new UserController();
+				boolean flag=uc.doDelete(id);
+				if(flag){
+					System.out.println("删除成功！！！");			
+				}else{
+					System.out.println("删除失败啦o(╥﹏╥)o");
+				}
+				break;
+			} catch(Exception e){
+				System.out.println("输入错误，只能数字");
+				System.out.println("请您重新输入");
+				
+				
+			}
+		
+		}
+		
+	}
 	}
 
 }

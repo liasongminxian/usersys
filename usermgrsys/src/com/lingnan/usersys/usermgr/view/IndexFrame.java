@@ -130,8 +130,11 @@ public class IndexFrame implements BaseFrame{
 		
 	}
 
+
+
+
 	@Override
-	public void updateShow(String type, UserVo user) {
+	public void updateShow(String type) {
 		// TODO Auto-generated method stub
 		
 	}

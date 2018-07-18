@@ -40,7 +40,7 @@ public class NormalFrame extends IndexFrame{
 			
 			
 			case 1:
-				this.updateShow("修改个人信息",user);
+				this.updateShow("修改个人信息");
 				break;
 			case 2:
 				this.searchShow();

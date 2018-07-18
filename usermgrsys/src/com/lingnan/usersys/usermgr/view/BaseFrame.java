@@ -21,6 +21,6 @@ public interface BaseFrame {
 	 * @param type
 	 * @param user
 	 */
-	public void updateShow(String type,UserVo user);//¿¼ÂÇuser
+	public void updateShow(String type);//¿¼ÂÇuser
 
 }

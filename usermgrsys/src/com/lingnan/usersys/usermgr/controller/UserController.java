@@ -63,5 +63,22 @@ public class UserController {
 		
 		
 	}
+	
+	public boolean doDelete(int id){
+		boolean flag=false;
+		
+		try{
+//			调用用户service接口中的login方法，进行用户登录操作
+			flag=userMgrService.delete(id);
+		
+		} catch(Exception e){
+//			显示异常信息
+			System.out.println("controller层用户删除时发生错误"+e.getMessage());
+		} 
+		
+		return flag;
+		
+		
+	}
 
 }

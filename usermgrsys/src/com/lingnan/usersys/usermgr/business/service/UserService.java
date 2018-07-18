@@ -16,4 +16,6 @@ public interface UserService {
 	
 	public UserVo findById(int id);
 	
+	public boolean delete(int id);
+	
 }

@@ -111,4 +111,31 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 
+	@Override
+	public boolean delete(int id) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.delete(id);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户删除错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+	}
+
 }
