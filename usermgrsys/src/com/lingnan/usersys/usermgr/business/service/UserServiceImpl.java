@@ -1,6 +1,9 @@
 package com.lingnan.usersys.usermgr.business.service;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.lingnan.usersys.common.constant.EnumType;
 import com.lingnan.usersys.common.dao.DaoFactory;
@@ -130,6 +133,208 @@ public class UserServiceImpl implements UserService{
 		} catch(Exception e){
 			DBUtils.rollback(conn);
 			throw new ServiceException("service层用户删除错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+	}
+
+	@Override
+	public boolean updatePassword(int id, String password) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.updatePassword(id, password);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户修改密码错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+		
+	}
+
+	@Override
+	public boolean updateMail(int id, String mail) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.updateMail(id, mail);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户修改邮箱错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+	}
+
+	@Override
+	public List<UserVo> findAll() {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		List<UserVo> alluser=new ArrayList<UserVo>();
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			alluser=userMgrDao.findAll();
+			
+		} catch(DaoException e){
+			throw e;
+		} catch(Exception e){
+			throw new ServiceException("service层查询所有用户错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		return alluser;
+	}
+
+	@Override
+	public boolean updateName(int id, String name) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.updateName(id, name);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户修改用户名错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+	}
+
+	@Override
+	public boolean updateBirth(int id, Date birth) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.updateBirth(id, birth);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户修改生日错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		
+		return flag;
+	}
+
+	@Override
+	public List<UserVo> findByName(String name) {
+		Connection conn=null;
+		UserVo user=null;
+		List<UserVo> allname=new ArrayList<UserVo>();
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			allname=userMgrDao.findByName(name);
+			
+		} catch(DaoException e){
+			throw e;
+		} catch(Exception e){
+			throw new ServiceException("service层findByName用户查询错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		return allname;
+	}
+
+	@Override
+	public List<UserVo> findByPage(int pageNo, int pageSize) {
+		Connection conn=null;
+		UserVo user=null;
+		List<UserVo> allpage=new ArrayList<UserVo>();
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			allpage=userMgrDao.findByPage(pageNo, pageSize);
+			
+		} catch(DaoException e){
+			throw e;
+		} catch(Exception e){
+			throw new ServiceException("service层findByPage用户查询错误",e);
+		} finally{
+			DBUtils.closeConnection(conn);
+		}
+		// TODO Auto-generated method stub
+		return allpage;
+	}
+
+	@Override
+	public boolean updateSuperUser(int id) {
+//		声明数据库连接对象，用于保存数据库连接对象
+		Connection conn=null;
+		boolean flag=false;
+		try{
+//			调用数据库工具类的getConnection方法，取得数据库连接对象，并赋值给数据库连接对象变量
+			conn=DBUtils.getConnection();
+			UserDao userMgrDao=(UserDao)DaoFactory.getDao(conn,EnumType.USER_DAO);
+			DBUtils.beginTransaction(conn);
+			flag=userMgrDao.updateSuperUser(id);
+			DBUtils.commit(conn);
+			
+		} catch(DaoException e){
+			DBUtils.rollback(conn);
+			throw e;
+		} catch(Exception e){
+			DBUtils.rollback(conn);
+			throw new ServiceException("service层用户修改权限错误",e);
 		} finally{
 			DBUtils.closeConnection(conn);
 		}

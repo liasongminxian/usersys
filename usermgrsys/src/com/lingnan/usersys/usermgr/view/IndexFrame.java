@@ -51,7 +51,7 @@ public class IndexFrame implements BaseFrame{
 		}
 		
 	}
-
+//
 	public void loginShow() {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		

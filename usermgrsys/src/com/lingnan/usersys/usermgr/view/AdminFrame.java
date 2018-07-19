@@ -1,8 +1,12 @@
 package com.lingnan.usersys.usermgr.view;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.lingnan.usersys.common.exception.DateException;
 import com.lingnan.usersys.common.util.TypeUtils;
 import com.lingnan.usersys.usermgr.controller.UserController;
 import com.lingnan.usersys.usermgr.domain.UserVo;
@@ -42,7 +46,7 @@ public class AdminFrame extends NormalFrame{
 			System.out.println("添加管理员---------------- 1");
 			System.out.println("删除用户------------------ 2");
 			System.out.println("查询用户------------------ 3");
-			System.out.println("修改用户------------------ 4");		
+			System.out.println("修改用户权限------------------ 4");		
 			System.out.println("修改个人信息-------------- 5");
 			
 			System.out.println("退出程序------------------ 6");
@@ -70,7 +74,7 @@ public class AdminFrame extends NormalFrame{
 				this.searchShow();
 				break;
 			case 4:
-				this.updateShow("修改用户");
+				this.updateShow("修改用户权限");
 				break;
 			case 5:
 				this.updateShow("修改个人信息");
@@ -90,19 +94,17 @@ public class AdminFrame extends NormalFrame{
 		
 	}
 	
-	public void updateShow(String type,UserVo user){
-	
-	}
+
 	
 	public void searchShow(){
 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-		
+UserController uc=new UserController();
 		while(true){
 			System.out.println();
 			System.out.println("====================");
 			System.out.println("查询所有用户------- 1");
 			System.out.println("按ID查询 ---------- 2");
-			System.out.println("按用户名查询------- 3");
+			System.out.println("按用户名查询（模糊查询）------- 3");
 			System.out.println("分页查询----------- 4");		
 			System.out.println("返回上一页面 ------- 5");			
 			System.out.println("退出程序 ----------- 6");
@@ -122,14 +124,27 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 			
 			switch(i){
 			case 1:
-				this.addShow("注册管理员");
+				try{
+					List<UserVo> alluser=new ArrayList<UserVo>();
+					
+					alluser=uc.doFindAll();
+			    	for(UserVo u:alluser){
+			    		detailShow(u);
+
+				}
+					break;
+				} catch(Exception e){
+					System.out.println("输入错误，只能输入1~6的数字");
+					System.out.println("请您重新输入");					
+				}
 				break;
 			case 2:
 				System.out.println("请输入要查询的ID号：");
-				int id=-1;
+				
 				try{
+					int id=-1;
 					id=Integer.parseInt(br.readLine());
-					UserController uc=new UserController();
+					
 					UserVo getuser=uc.doFindById(id);
 					if(getuser!=null){
 					detailShow(getuser);
@@ -141,11 +156,43 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 				}				
 				break;
 			case 3:
+                System.out.println("请输入要查询的用户名关键字：");
+				
+				try{
+					String name=null;
+					name=br.readLine();
+					List<UserVo> alluser=new ArrayList<UserVo>();
+					
+					alluser=uc.doFindByName(name);
+			    	for(UserVo u:alluser){
+			    		detailShow(u);
 
-				this.searchShow();
-				break;
+				} 
+				}catch(Exception e){
+					System.out.println("输入错误，只能输入1~6的数字");
+					System.out.println("请您重新输入");					
+				}	
+					break;
 			case 4:
-				this.updateShow("修改用户");
+				System.out.println("请输入要每页显示的条数");
+				try {
+					int pageSize = Integer.parseInt(br.readLine());
+					System.out.println("请输入要每页显示的页码");
+					int pageNo = Integer.parseInt(br.readLine());
+	List<UserVo> allpage=new ArrayList<UserVo>();
+					
+					allpage=uc.doFindByPage(pageNo, pageSize);
+			    	for(UserVo u:allpage){
+			    		detailShow(u);
+
+				} 
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 5:
 				this.show();
@@ -239,8 +286,35 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 	
 	
 	public void updateShow(String type){
-		
+		UserController uc=new UserController();
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		if(("修改用户权限").equals(type)){
+			System.out.println();
+
+
+		System.out.println("请输入要修改用户权限的ID：");
+		int id=-1;
+		while(true){
+			try{
+				id=Integer.parseInt(br.readLine());
+
+				boolean flag=uc.doUpdateSuperuser(id);
+				if(flag){
+					System.out.println("修改成功！！！");			
+				}else{
+					System.out.println("修改失败啦o(╥﹏╥)o");
+				}
+				break;
+			} catch(Exception e){
+				System.out.println("输入错误，只能数字");
+				System.out.println("请您重新输入");
+				
+				
+			}
+		
+		}
+		
+	}
 		if(("删除用户").equals(type)){
 			System.out.println();
 		System.out.println("删除用户界面");
@@ -250,7 +324,7 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		while(true){
 			try{
 				id=Integer.parseInt(br.readLine());
-				UserController uc=new UserController();
+
 				boolean flag=uc.doDelete(id);
 				if(flag){
 					System.out.println("删除成功！！！");			
@@ -268,6 +342,164 @@ BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		}
 		
 	}
+		if (("修改个人信息".equals(type))) {
+			
+			while(true){
+				System.out.println();
+				System.out.println("====================");
+				System.out.println("修改用户名------- 1");
+				System.out.println("修改密码---------- 2");
+				System.out.println("修改邮箱------- 3");
+				System.out.println("修改生日----------- 4");		
+				System.out.println("返回上一页面 ------- 5");			
+				System.out.println("退出程序 ----------- 6");
+				int i=-1;
+				while(true){
+					try{
+						i=Integer.parseInt(br.readLine());
+						
+						break;
+					} catch(Exception e){
+						System.out.println("输入错误，只能输入1~6的数字");
+						System.out.println("请您重新输入");
+						
+						
+					}
+				}
+				
+				switch(i){
+				case 1:
+					this.updateShow("修改用户名");
+					break;
+				case 2:
+					this.updateShow("修改密码");				
+					break;
+				case 3:
+
+					this.updateShow("修改邮箱");	
+					break;
+				case 4:
+					this.updateShow("修改生日");
+					break;
+				case 5:
+					this.show();
+					break;		
+				case 6:
+					System.out.println("感谢您的使用，再会。");
+					System.exit(0);
+				default:
+					System.out.println("您的输入操作不正确，请重新输入");
+					
+					
+				
+				}
+				
+			}
+
+		}
+			
+
+	
+	if("修改密码".equals(type)){
+		try {
+		boolean flag=false;
+		System.out.println("请输入新密码：");
+		
+			String password=br.readLine();
+			
+			flag=uc.doUpdatePassword(user.getId(), password);
+			if (flag) {
+				System.out.println("修改密码成功");
+			} else{
+				System.out.println("修改密码失败");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	if("修改邮箱".equals(type)){
+		try {
+			boolean flag=false;
+			String mail;
+		while(true){
+			System.out.println("请输入您的邮箱：");
+			mail=br.readLine();
+			if(TypeUtils.mailCheck(mail)){
+
+				flag=uc.doUpdateMail(user.getId(), mail);
+				break;				
+			} else{
+				System.out.println("请输入正确的邮箱格式：前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
+			}
+			
+			
+		}
+
+			if (flag) {
+				user.setMail(mail);
+				System.out.println("修改邮箱成功");
+			} else{
+				System.out.println("修改邮箱失败");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	if("修改用户名".equals(type)){
+		try {
+		boolean flag=false;
+		System.out.println("请输入新用户名：");
+		
+			String name=br.readLine();
+
+			flag=uc.doUpdateName(user.getId(), name);
+			if (flag) {
+				user.setName(name);
+				System.out.println("修改用户名成功");
+			} else{
+				System.out.println("修改用户名失败");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	if("修改生日".equals(type)){
+		try {
+		boolean flag=false;
+		System.out.println("请输入新日期(yyyy-mm-dd)：");
+		String birth=br.readLine();
+		java.sql.Date date=TypeUtils.strToDate(birth);
+
+			flag=uc.doUpdateBirth(user.getId(), date);
+			if (flag) {
+				user.setBirth(date);
+				System.out.println("修改生日成功");
+			} else{
+				System.out.println("修改生日失败");
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DateException e) {
+			throw new DateException("邮箱", e);
+		}
+		
+	
+		
+		
+		
+	}
 	}
 
+	
 }
