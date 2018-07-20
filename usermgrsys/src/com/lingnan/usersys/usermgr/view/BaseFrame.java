@@ -1,6 +1,12 @@
 package com.lingnan.usersys.usermgr.view;
 
 import com.lingnan.usersys.usermgr.domain.UserVo;
+/**
+ * 视图层类接口
+ * 为视图层类创建公共框架
+ * @author Administrator
+ *
+ */
 
 public interface BaseFrame {
 	/**
@@ -9,7 +15,7 @@ public interface BaseFrame {
 	public void show();
 	/**
 	 * 增加用户页面显示
-	 * @param type
+	 * @param type 增加用户信息的类型
 	 */
 	public void addShow(String type);
 	/**
@@ -18,9 +24,9 @@ public interface BaseFrame {
 	public void searchShow();
 	/**
 	 * 更新用户页面显示
-	 * @param type
-	 * @param user
+	 * @param type 更新信息的类型
+	 * 
 	 */
-	public void updateShow(String type);//考虑user
+	public void updateShow(String type);
 
 }

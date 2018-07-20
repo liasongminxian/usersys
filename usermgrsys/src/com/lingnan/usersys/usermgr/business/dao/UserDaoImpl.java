@@ -13,7 +13,12 @@ import com.lingnan.usersys.common.exception.DaoException;
 import com.lingnan.usersys.common.exception.ServiceException;
 import com.lingnan.usersys.common.util.DBUtils;
 import com.lingnan.usersys.usermgr.domain.UserVo;
-
+/**
+ * UserDao实现类
+ * 继承UserDao方法，对其进行实例化
+ * @author Administrator
+ *
+ */
 public class UserDaoImpl implements UserDao{
 
 
@@ -84,7 +89,11 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 
-
+	/**
+	 * 用户注册实例化
+	 * @param newuser 新注册的用户信息
+	 * @return 布尔值
+	 */
 	
 	public boolean register(UserVo newuser) {
 //		声明结果集对象变量，用于保存数据库查询结果
@@ -138,6 +147,11 @@ public class UserDaoImpl implements UserDao{
 	}
 
 
+	/**
+	 * 按ID查询I_USER表实例化
+	 * @param id 要查询的ID号
+	 * @return 查询到的用户信息
+	 */
 	
 	public UserVo findById(int id) {
 //		声明结果集对象变量，用于保存数据库查询结果
@@ -182,6 +196,7 @@ public class UserDaoImpl implements UserDao{
 		    	
 		    }  else{
 		    	System.out.println("没有此用户");
+		    	System.out.println();
 		    	
 		    }
 		} catch (SQLException e) {
@@ -201,6 +216,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	
+	/**
+	 * 按ID删除用户信息（软删除）实例化
+	 * @param id 要删除的ID号
+	 * @return 布尔值
+	 */
 	public boolean delete(int id) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -219,6 +240,7 @@ public class UserDaoImpl implements UserDao{
 		    if(rs.next()){
 		    	if(rs.getInt("SUPERUSER")==1){
 		    		System.out.println("该用户是管理员，你没有权限删除。");
+		    		System.out.println();
 		    	} else {
 //					调用连接对象的prepareStatement方法，得到预编译对象，赋值给预编译对象变量
 					prep=conn.prepareStatement("update I_USER set STATUS=0 where ID=? and SUPERUSER=2");
@@ -250,6 +272,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按ID更新密码实例化
+	 * @param id 要更新密码的ID号
+	 * @param password 新密码
+	 * @return 布尔值
+	 */
 	public boolean updatePassword(int id,String password) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -269,6 +297,7 @@ public class UserDaoImpl implements UserDao{
 		    	if(rs.next()){
 		    		if(rs.getInt("STATUS")==0){
 		    			System.out.println("用户已被删除");
+		    			System.out.println();
 		    		}
 		    		else{
 		    			prep=conn.prepareStatement("update I_USER set PASS=? where ID=?");
@@ -281,6 +310,7 @@ public class UserDaoImpl implements UserDao{
 		    	}
 		    	else {
 					System.out.println("没有此用户");
+					System.out.println();
 				}
 
 		} catch (SQLException e) {
@@ -298,6 +328,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按ID更新邮箱实例化
+	 * @param id 要更新邮箱的ID号
+	 * @param mail 新邮箱
+	 * @return 布尔值
+	 */
 	public boolean updateMail(int id, String mail) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -317,6 +353,7 @@ public class UserDaoImpl implements UserDao{
 		    	if(rs.next()){
 		    		if(rs.getInt("STATUS")==0){
 		    			System.out.println("用户已被删除");
+		    			System.out.println();
 		    		}
 		    		else{
 		    			prep=conn.prepareStatement("update I_USER set MAIL=? where ID=?");
@@ -329,6 +366,7 @@ public class UserDaoImpl implements UserDao{
 		    	}
 		    	else {
 					System.out.println("没有此用户");
+					System.out.println();
 				}
 
 		} catch (SQLException e) {
@@ -346,6 +384,10 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 查询所有信息实例化
+	 * @return 所有用户的信息
+	 */
 	public List<UserVo> findAll() {
 //		List<Authority> l = q.list();  
 //        
@@ -414,6 +456,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按ID更新用户名实例化
+	 * @param id 要更新用户名的ID号
+	 * @param name 新用户名
+	 * @return 布尔值
+	 */
 	public boolean updateName(int id, String name) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -433,6 +481,7 @@ public class UserDaoImpl implements UserDao{
 		    	if(rs.next()){
 		    		if(rs.getInt("STATUS")==0){
 		    			System.out.println("用户已被删除");
+		    			System.out.println();
 		    		}
 		    		else{
 		    			prep=conn.prepareStatement("update I_USER set NAME=? where ID=?");
@@ -445,6 +494,7 @@ public class UserDaoImpl implements UserDao{
 		    	}
 		    	else {
 					System.out.println("没有此用户");
+					System.out.println();
 				}
 
 		} catch (SQLException e) {
@@ -461,6 +511,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按ID更新生日日期实例化
+	 * @param id 要更新生日日期的ID号
+	 * @param birth 新生日日期
+	 * @return 布尔值
+	 */
 	public boolean updateBirth(int id, Date birth) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -480,6 +536,7 @@ public class UserDaoImpl implements UserDao{
 		    	if(rs.next()){
 		    		if(rs.getInt("STATUS")==0){
 		    			System.out.println("用户已被删除");
+		    			System.out.println();
 		    		}
 		    		else{
 		    			prep=conn.prepareStatement("update I_USER set BIRTH=? where ID=?");
@@ -492,6 +549,7 @@ public class UserDaoImpl implements UserDao{
 		    	}
 		    	else {
 					System.out.println("没有此用户");
+					System.out.println();
 				}
 
 		} catch (SQLException e) {
@@ -508,6 +566,11 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按用户名查找（模糊查询）实例化
+	 * @param name 要查找的用户名字段
+	 * @return 含有相关字段的用户信息
+	 */
 	public List<UserVo> findByName(String name) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -547,6 +610,7 @@ public class UserDaoImpl implements UserDao{
 		    	if (rs.getInt("STATUS")==0) {
 		    		
 		    		System.out.println(rs.getString("NAME")+"已被删除");
+		    		System.out.println();
 					
 				}
 
@@ -555,6 +619,7 @@ public class UserDaoImpl implements UserDao{
 		    	
 		    }  if(flag==false){
 		    	System.out.println("没有含有"+name+"的用户");
+		    	System.out.println();
 		    	
 		    }
 		    
@@ -583,6 +648,12 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 分页查询实例化
+	 * @param pageNo 要查询的页码
+	 * @param pageSize 每页有多少个记录
+	 * @return 指定页码的用户信息
+	 */
 	public List<UserVo> findByPage(int pageNo, int pageSize) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -625,6 +696,7 @@ public class UserDaoImpl implements UserDao{
 		    	if (rs.getInt("STATUS")==0) {
 		    		
 		    		System.out.println(rs.getString("NAME")+"已被删除");
+		    		System.out.println();
 					
 				}
 
@@ -660,6 +732,11 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
+	/**
+	 * 按ID更新权限实例化
+	 * @param id 要更新权限的ID号
+	 * @return 布尔值
+	 */
 	public boolean updateSuperUser(int id) {
 //		声明结果集对象变量，用于保存数据库查询结果
 		ResultSet rs=null;
@@ -679,9 +756,11 @@ public class UserDaoImpl implements UserDao{
 		    	if(rs.next()){
 		    		if(rs.getInt("SUPERUSER")==1){
 		    			System.out.println("此用户是管理员，无法修改其权限");
+		    			System.out.println();
 		    		}
 		    		else if(rs.getInt("STATUS")==0){
 		    			System.out.println("用户已被删除");
+		    			System.out.println();
 		    		}
 		    		else{
 		    			prep=conn.prepareStatement("update I_USER set SUPERUSER=1 where ID=?");
@@ -693,6 +772,7 @@ public class UserDaoImpl implements UserDao{
 		    	}
 		    	else {
 					System.out.println("没有此用户");
+					System.out.println();
 				}
 
 		} catch (SQLException e) {

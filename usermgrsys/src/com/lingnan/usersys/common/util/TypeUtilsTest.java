@@ -5,10 +5,17 @@ import static org.junit.Assert.*;
 import java.util.Date;
 
 import org.junit.Test;
-
+/**
+ * 格式转换类的测试类
+ * @author Administrator
+ *
+ */
 public class TypeUtilsTest {
 
 	@Test
+	/**
+	 * 测试TypeUtils里面的strToDate方法
+	 */
 	public void testStrToDate() {
 		Date date=TypeUtils.strToDate("1997-03-09");
 		System.out.println("1."+date);
@@ -16,6 +23,9 @@ public class TypeUtilsTest {
 	}
 
 	@Test
+	/**
+	 * 测试TypeUtils里面的dateToStr方法
+	 */
 	public void testDateToStr() {
 		java.sql.Date sdate=new java.sql.Date(97,2,9);
 		
@@ -25,6 +35,9 @@ public class TypeUtilsTest {
 	}
 
 	@Test
+	/**
+	 * 测试TypeUtils里面的mailCheck方法
+	 */
 	public void testMailCheck() {
 		String str1="a@163.com";
 		String str2="aaa";

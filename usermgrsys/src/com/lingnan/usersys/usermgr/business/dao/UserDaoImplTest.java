@@ -1,5 +1,6 @@
 package com.lingnan.usersys.usermgr.business.dao;
 
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import java.sql.Connection;
@@ -8,7 +9,11 @@ import java.sql.Connection;
 import com.lingnan.usersys.common.util.DBUtils;
 import com.lingnan.usersys.common.util.TypeUtils;
 import com.lingnan.usersys.usermgr.domain.UserVo;
-
+/**
+ * UserDaoImp≤‚ ‘¿‡
+ * @author Administrator
+ *
+ */
 public class UserDaoImplTest {
 @Test
 

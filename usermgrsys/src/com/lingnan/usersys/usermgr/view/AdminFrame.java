@@ -10,14 +10,24 @@ import com.lingnan.usersys.common.exception.DateException;
 import com.lingnan.usersys.common.util.TypeUtils;
 import com.lingnan.usersys.usermgr.controller.UserController;
 import com.lingnan.usersys.usermgr.domain.UserVo;
-
+/**
+ * 管理员视图层
+ * @author Administrator
+ *
+ */
 public class AdminFrame extends NormalFrame{
-	
+	/**
+	 * 构造方法
+	 * @param user 登录的用户信息
+	 */
 	public AdminFrame(UserVo user){
 		super(user);
 		
 	}
 	
+	/**
+	 * 登录成功的视图
+	 */
 	public void loginSuccShow(){
 		String superuser=null;
 		if(user.getSuperuser()==1){
@@ -25,9 +35,9 @@ public class AdminFrame extends NormalFrame{
 		} else if(user.getSuperuser()==2){
 			superuser="普通用户";
 		}
-		System.out.println("欢迎登录主窗体");
-		System.out.println(user.getName()+"您好~"+"        您的权限是："+superuser);
-		System.out.println("====================");
+
+		System.out.println("                                      "+superuser+user.getName()+"您好~");
+		
 		if(user.getSuperuser()==1){
 			this.show();
 			
@@ -38,18 +48,22 @@ public class AdminFrame extends NormalFrame{
 		
 	}
 	
+	/**
+	 * 管理员主视图
+	 */
 	public void show() {
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		
 		while(true){
 			System.out.println();
-			System.out.println("添加管理员---------------- 1");
-			System.out.println("删除用户------------------ 2");
-			System.out.println("查询用户------------------ 3");
-			System.out.println("修改用户权限------------------ 4");		
-			System.out.println("修改个人信息-------------- 5");
+			System.out.println("      **************************************");
+			System.out.println("      *            1.添加管理员                          *");
+			System.out.println("      *            2.删除用户                              *");
+			System.out.println("      *            3.查询用户                              *");
+			System.out.println("      *            4.修改用户权限                       *");		
+			System.out.println("      *            5.修改个人信息                       *");
 			
-			System.out.println("退出程序------------------ 6");
+			System.out.println("      *            6.退出程序                               *");
 			int i=-1;
 			while(true){
 				try{
@@ -81,7 +95,7 @@ public class AdminFrame extends NormalFrame{
 				break;
 		
 			case 6:
-				System.out.println("感谢您的使用，再会。");
+				System.out.println("                                  感谢您的使用，再会。");
 				System.exit(0);
 			default:
 				System.out.println("您的输入操作不正确，请重新输入");
@@ -95,22 +109,26 @@ public class AdminFrame extends NormalFrame{
 	}
 	
 
+	/**
+	 * 查询方式主视图
+	 */
 	
 	public void searchShow(){
 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 UserController uc=new UserController();
 		while(true){
 			System.out.println();
-			System.out.println("====================");
-			System.out.println("查询所有用户------- 1");
-			System.out.println("按ID查询 ---------- 2");
-			System.out.println("按用户名查询（模糊查询）------- 3");
-			System.out.println("分页查询----------- 4");		
-			System.out.println("返回上一页面 ------- 5");			
-			System.out.println("退出程序 ----------- 6");
+			System.out.println("      **************************************");
+			System.out.println("      *           1.查询所有用户                        *");
+			System.out.println("      *           2.按ID查询                               *");
+			System.out.println("      *           3.按用户名查询（模糊查询）  *");
+			System.out.println("      *           4.分页查询                                *");		
+			System.out.println("      *           5.返回上一页面                        *");			
+			System.out.println("      *           6.退出程序                                *");
 			int i=-1;
 			while(true){
 				try{
+					
 					i=Integer.parseInt(br.readLine());
 					
 					break;
@@ -139,7 +157,7 @@ UserController uc=new UserController();
 				}
 				break;
 			case 2:
-				System.out.println("请输入要查询的ID号：");
+				System.out.println("                                  请输入要查询的ID号");
 				
 				try{
 					int id=-1;
@@ -156,7 +174,7 @@ UserController uc=new UserController();
 				}				
 				break;
 			case 3:
-                System.out.println("请输入要查询的用户名关键字：");
+                System.out.println("                              请输入要查询的用户名关键字");
 				
 				try{
 					String name=null;
@@ -174,10 +192,10 @@ UserController uc=new UserController();
 				}	
 					break;
 			case 4:
-				System.out.println("请输入要每页显示的条数");
+				System.out.println("                                  请输入要每页显示的条数");
 				try {
 					int pageSize = Integer.parseInt(br.readLine());
-					System.out.println("请输入要每页显示的页码");
+					System.out.println("                                      请输入要显示的页码");
 					int pageNo = Integer.parseInt(br.readLine());
 	List<UserVo> allpage=new ArrayList<UserVo>();
 					
@@ -198,7 +216,7 @@ UserController uc=new UserController();
 				this.show();
 				break;		
 			case 6:
-				System.out.println("感谢您的使用，再会。");
+				System.out.println("                                  感谢您的使用，再会。");
 				System.exit(0);
 			default:
 				System.out.println("您的输入操作不正确，请重新输入");
@@ -211,15 +229,20 @@ UserController uc=new UserController();
 		
 	}
 	
+	/**
+	 * 查询结果主视图
+	 * @param getuser 查询结果的用户信息
+	 */
+	
 	public void detailShow(UserVo getuser) {
 		
 		System.out.println();
-		System.out.println("信息查询界面");
-		System.out.println("====================");
-		System.out.println("ID:      "+getuser.getId());
-		System.out.println("用户名:  "+getuser.getName());
-		System.out.println("生日:    "+getuser.getBirth());
-		System.out.println("邮箱:    "+getuser.getMail());
+		System.out.println("                                        信息查询界面");
+		System.out.println("      **************************************");
+		System.out.println("                ID:      "+getuser.getId());
+		System.out.println("                                用户名:  "+getuser.getName());
+		System.out.println("                                生日:    "+getuser.getBirth());
+		System.out.println("                                邮箱:    "+getuser.getMail());
 		
 		String superuser=null;
 		if (getuser.getSuperuser()==1) {
@@ -231,40 +254,44 @@ UserController uc=new UserController();
 			superuser="普通用户";
 		}
 		
-		System.out.println("权限:    "+superuser);
-		System.out.println("====================");
+		System.out.println("                                权限:    "+superuser);
+		System.out.println("      **************************************");
 		
 		
 		
 	}
 	
+	/**
+	 * 增加管理员视图
+	 */
 	public void addShow(String type){
 		
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 		if(("注册管理员").equals(type)){
 			System.out.println();
-		System.out.println("增加管理员界面");
-		System.out.println("====================");
-		System.out.println("请输入新管理员的用户名：");
+		System.out.println("                                      增加管理员界面");
+		System.out.println("      **************************************");
+		System.out.println("                                请输入新管理员的用户名");
 		try{
 			UserVo newuser=new UserVo();
 			newuser.setName(br.readLine());
-			System.out.println("请输入新管理员的密码：");
+			System.out.println("                                  请输入新管理员的密码");
 			newuser.setPass(br.readLine());
 			while(true){
-				System.out.println("请输入新管理员的邮箱：");
+				System.out.println("                                  请输入新管理员的邮箱");
 				String mail=br.readLine();
 				if(TypeUtils.mailCheck(mail)){
 					newuser.setMail(mail);
 					break;				
 				} else{
 					System.out.println("请输入正确的邮箱格式：前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
+					System.out.println("前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
 				}
 				
 				
 			}
 			
-			System.out.println("请输入新管理员的生日(yyyy-mm-dd)：");
+			System.out.println("                      请输入新管理员的生日(yyyy-mm-dd)");
 			String birth=br.readLine();
 			java.sql.Date date=TypeUtils.strToDate(birth);
 			newuser.setBirth(date);
@@ -272,9 +299,11 @@ UserController uc=new UserController();
 			UserController uc=new UserController();
 			boolean flag=uc.doRegister(newuser);
 			if(flag){
-				System.out.println("添加成功！！！");			
+				System.out.println("                                   添加成功啦O(∩_∩)O");	
+				System.out.println();
 			}else{
-				System.out.println("添加失败啦o(╥﹏╥)o");
+				System.out.println("                                   添加失败啦o(╥﹏╥)o");
+				System.out.println();
 			}
 		} catch(Exception e){
 			System.out.println("增加新管理员时出错了"+e.getMessage());
@@ -285,6 +314,10 @@ UserController uc=new UserController();
 	}
 	
 	
+	/**
+	 * 更新视图
+	 * @param type 更新类型
+	 */
 	public void updateShow(String type){
 		UserController uc=new UserController();
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
@@ -292,7 +325,7 @@ UserController uc=new UserController();
 			System.out.println();
 
 
-		System.out.println("请输入要修改用户权限的ID：");
+		System.out.println("                             请输入要修改用户权限的ID");
 		int id=-1;
 		while(true){
 			try{
@@ -300,9 +333,11 @@ UserController uc=new UserController();
 
 				boolean flag=uc.doUpdateSuperuser(id);
 				if(flag){
-					System.out.println("修改成功！！！");			
+					System.out.println("                                   修改成功啦O(∩_∩)O");	
+					System.out.println();		
 				}else{
-					System.out.println("修改失败啦o(╥﹏╥)o");
+					System.out.println("                                   修改失败啦o(╥﹏╥)o");
+					System.out.println();
 				}
 				break;
 			} catch(Exception e){
@@ -317,9 +352,9 @@ UserController uc=new UserController();
 	}
 		if(("删除用户").equals(type)){
 			System.out.println();
-		System.out.println("删除用户界面");
-		System.out.println("====================");
-		System.out.println("请输入要删除的用户ID：");
+		System.out.println("                                       删除用户界面");
+		System.out.println("      **************************************");
+		System.out.println("                                请输入要删除的用户ID");
 		int id=-1;
 		while(true){
 			try{
@@ -327,9 +362,11 @@ UserController uc=new UserController();
 
 				boolean flag=uc.doDelete(id);
 				if(flag){
-					System.out.println("删除成功！！！");			
+					System.out.println("                                   删除成功啦O(∩_∩)O");	
+					System.out.println();			
 				}else{
-					System.out.println("删除失败啦o(╥﹏╥)o");
+					System.out.println("                                   删除失败啦o(╥﹏╥)o");
+					System.out.println();
 				}
 				break;
 			} catch(Exception e){
@@ -345,14 +382,14 @@ UserController uc=new UserController();
 		if (("修改个人信息".equals(type))) {
 			
 			while(true){
-				System.out.println();
-				System.out.println("====================");
-				System.out.println("修改用户名------- 1");
-				System.out.println("修改密码---------- 2");
-				System.out.println("修改邮箱------- 3");
-				System.out.println("修改生日----------- 4");		
-				System.out.println("返回上一页面 ------- 5");			
-				System.out.println("退出程序 ----------- 6");
+				System.out.println("                                     修改个人信息界面");
+				System.out.println("      **************************************");
+				System.out.println("      *             1.修改用户名                        *");
+				System.out.println("      *             2.修改密码                            *");
+				System.out.println("      *             3.修改邮箱                            *");
+				System.out.println("      *             4.修改生日                            *");		
+				System.out.println("      *             5.返回上一页面                    *");			
+				System.out.println("      *             6.退出程序                            *");
 				int i=-1;
 				while(true){
 					try{
@@ -385,7 +422,7 @@ UserController uc=new UserController();
 					this.show();
 					break;		
 				case 6:
-					System.out.println("感谢您的使用，再会。");
+					System.out.println("                                  感谢您的使用，再会。");
 					System.exit(0);
 				default:
 					System.out.println("您的输入操作不正确，请重新输入");
@@ -403,15 +440,17 @@ UserController uc=new UserController();
 	if("修改密码".equals(type)){
 		try {
 		boolean flag=false;
-		System.out.println("请输入新密码：");
+		System.out.println("                                      请输入新密码");
 		
 			String password=br.readLine();
 			
 			flag=uc.doUpdatePassword(user.getId(), password);
 			if (flag) {
-				System.out.println("修改密码成功");
+				System.out.println("                                      修改密码成功");
+				System.out.println();
 			} else{
-				System.out.println("修改密码失败");
+				System.out.println("                                      修改密码失败");
+				System.out.println();
 			}
 			
 		} catch (IOException e) {
@@ -424,7 +463,7 @@ UserController uc=new UserController();
 			boolean flag=false;
 			String mail;
 		while(true){
-			System.out.println("请输入您的邮箱：");
+			System.out.println("                                      请输入您的邮箱");
 			mail=br.readLine();
 			if(TypeUtils.mailCheck(mail)){
 
@@ -432,6 +471,7 @@ UserController uc=new UserController();
 				break;				
 			} else{
 				System.out.println("请输入正确的邮箱格式：前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
+				System.out.println("前面任意位数非空字符，必须带@，末尾必须有.com或者.cn");
 			}
 			
 			
@@ -439,9 +479,11 @@ UserController uc=new UserController();
 
 			if (flag) {
 				user.setMail(mail);
-				System.out.println("修改邮箱成功");
+				System.out.println("                                      修改邮箱成功");
+				System.out.println();
 			} else{
-				System.out.println("修改邮箱失败");
+				System.out.println("                                      修改邮箱失败");
+				System.out.println();
 			}
 			
 		} catch (IOException e) {
@@ -454,16 +496,18 @@ UserController uc=new UserController();
 	if("修改用户名".equals(type)){
 		try {
 		boolean flag=false;
-		System.out.println("请输入新用户名：");
+		System.out.println("                                      请输入新用户名");
 		
 			String name=br.readLine();
 
 			flag=uc.doUpdateName(user.getId(), name);
 			if (flag) {
 				user.setName(name);
-				System.out.println("修改用户名成功");
+				System.out.println("                                      修改用户名成功");
+				System.out.println();
 			} else{
-				System.out.println("修改用户名失败");
+				System.out.println("                                      修改用户名失败");
+				System.out.println();
 			}
 			
 		} catch (IOException e) {
@@ -475,16 +519,18 @@ UserController uc=new UserController();
 	if("修改生日".equals(type)){
 		try {
 		boolean flag=false;
-		System.out.println("请输入新日期(yyyy-mm-dd)：");
+		System.out.println("                              请输入新日期(yyyy-mm-dd)");
 		String birth=br.readLine();
 		java.sql.Date date=TypeUtils.strToDate(birth);
 
 			flag=uc.doUpdateBirth(user.getId(), date);
 			if (flag) {
 				user.setBirth(date);
-				System.out.println("修改生日成功");
+				System.out.println("                                      修改生日成功");
+				System.out.println();
 			} else{
-				System.out.println("修改生日失败");
+				System.out.println("                                      修改生日失败");
+				System.out.println();
 			}
 			
 		} catch (IOException e) {

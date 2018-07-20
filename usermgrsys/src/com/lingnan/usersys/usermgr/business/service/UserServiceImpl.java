@@ -65,6 +65,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 用户注册
+	 * @param newuser 新注册的用户信息
+	 * @return 布尔值
+	 */
 	public boolean register(UserVo newuser) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -93,6 +98,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID查询I_USER表
+	 * @param id 要查询的ID号
+	 * @return 查询到的用户信息
+	 */
 	public UserVo findById(int id) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -115,6 +125,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID删除用户信息（软删除）
+	 * @param id 要删除的ID号
+	 * @return 布尔值
+	 */
 	public boolean delete(int id) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -142,6 +157,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID更新密码
+	 * @param id 要更新密码的ID号
+	 * @param password 新密码
+	 * @return 布尔值
+	 */
 	public boolean updatePassword(int id, String password) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -170,6 +191,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID更新邮箱
+	 * @param id 要更新邮箱的ID号
+	 * @param mail 新邮箱
+	 * @return 布尔值
+	 */
 	public boolean updateMail(int id, String mail) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -197,6 +224,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 查询所有信息
+	 * @return 所有用户的信息
+	 */
 	public List<UserVo> findAll() {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -219,6 +250,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID更新用户名
+	 * @param id 要更新用户名的ID号
+	 * @param name 新用户名
+	 * @return 布尔值
+	 */
 	public boolean updateName(int id, String name) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -246,6 +283,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID更新生日日期
+	 * @param id 要更新生日日期的ID号
+	 * @param birth 新生日日期
+	 * @return 布尔值
+	 */
 	public boolean updateBirth(int id, Date birth) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
@@ -273,6 +316,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按用户名查找（模糊查询）
+	 * @param name 要查找的用户名字段
+	 * @return 含有相关字段的用户信息
+	 */
 	public List<UserVo> findByName(String name) {
 		Connection conn=null;
 		UserVo user=null;
@@ -295,6 +343,10 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 查询所有信息
+	 * @return 所有用户的信息
+	 */
 	public List<UserVo> findByPage(int pageNo, int pageSize) {
 		Connection conn=null;
 		UserVo user=null;
@@ -317,6 +369,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	/**
+	 * 按ID更新权限
+	 * @param id 要更新权限的ID号
+	 * @return 布尔值
+	 */
 	public boolean updateSuperUser(int id) {
 //		声明数据库连接对象，用于保存数据库连接对象
 		Connection conn=null;
